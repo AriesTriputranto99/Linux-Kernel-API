@@ -1,445 +1,143 @@
- The Linux Kernel API
- # Create a folder
-$ mkdir actions-runner && cd actions-runner
- Download the lacxtest runner package
-$ curl -o actions-runner-linux-x64-2.320.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.320.0/actions-runner-linux-x64-2.320.0.tar.gz
- Optional: Validate the hash
-$ echo "93ac1b7ce743ee85b5d386f5c1787385ef07b3d7c728ff66ce0d3813d5f46900  actions-runner-linux-x64-2.320.0.tar.gz" | shasum -a 256 -c
- Extract the installer
-$ tar xzf ./actions-runner-linux-x64-2.320.0.tar.gz
-Configure
- Create the runner and start the configuration experience
-$ ./config.sh --url https://github.com/AriesTriputranto99/Linux-Kernel-API --token AY3FPRHMW376M3Z3FALEI6THFK7NO
- Last step, run it!
-$ ./run.sh
-Using your self-hosted runner
-Use this YAML in your workflow file for each job
-runs-on: self-hosted
-
-List Management Functions
-=========================
-.. kernel-doc:: include/linux/list.h :internal:
-
-Basic C Library Functions
-=========================
-
-When writing drivers, you cannot in general use routines which are from
-the C Library. Some of the functions have been found generally useful
-and they are listed below. The behaviour of these functions may vary
-slightly from those defined by ANSI, and these deviations are noted in
-the text.
-
-String Conversions
-------------------
-
-.. kernel-doc:: lib/vsprintf.c
-   :export:
-
-.. kernel-doc:: include/linux/kstrtox.h
-   :functions: kstrtol kstrtoul
-
-.. kernel-doc:: lib/kstrtox.c
-   :export:
-
-.. kernel-doc:: lib/string_helpers.c
-   :export:
-
-String Manipulation
--------------------
-
-.. kernel-doc:: include/linux/fortify-string.h
-   :internal:
-
-.. kernel-doc:: lib/string.c
-   :export:
-
-.. kernel-doc:: include/linux/string.h
-   :internal:
-
-.. kernel-doc:: mm/util.c
-   :functions: kstrdup kstrdup_const kstrndup kmemdup kmemdup_nul memdup_user
-               vmemdup_user strndup_user memdup_user_nul
-
-Basic Kernel Library Functions
-==============================
-
-The Linux kernel provides more basic utility functions.
-
-Bit Operations
---------------
-
-.. kernel-doc:: include/asm-generic/bitops/instrumented-atomic.h
-   :internal:
-
-.. kernel-doc:: include/asm-generic/bitops/instrumented-non-atomic.h
-   :internal:
-
-.. kernel-doc:: include/asm-generic/bitops/instrumented-lock.h
-   :internal:
-
-Bitmap Operations
------------------
-
-.. kernel-doc:: lib/bitmap.c
-   :doc: bitmap introduction
-
-.. kernel-doc:: include/linux/bitmap.h
-   :doc: declare bitmap
-
-.. kernel-doc:: include/linux/bitmap.h
-   :doc: bitmap overview
-
-.. kernel-doc:: include/linux/bitmap.h
-   :doc: bitmap bitops
-
-.. kernel-doc:: lib/bitmap.c
-   :export:
-
-.. kernel-doc:: lib/bitmap.c
-   :internal:
-
-.. kernel-doc:: include/linux/bitmap.h
-   :internal:
-
-Command-line Parsing
---------------------
-
-.. kernel-doc:: lib/cmdline.c
-   :export:
-
-Error Pointers
---------------
-
-.. kernel-doc:: include/linux/err.h
-   :internal:
-
-Sorting
--------
-
-.. kernel-doc:: lib/sort.c
-   :export:
-
-.. kernel-doc:: lib/list_sort.c
-   :export:
-
-Text Searching
---------------
-
-.. kernel-doc:: lib/textsearch.c
-   :doc: ts_intro
-
-.. kernel-doc:: lib/textsearch.c
-   :export:
-
-.. kernel-doc:: include/linux/textsearch.h
-   :functions: textsearch_find textsearch_next \
-               textsearch_get_pattern textsearch_get_pattern_len
-
-CRC and Math Functions in Linux
-===============================
-
-Arithmetic Overflow Checking
-----------------------------
-
-.. kernel-doc:: include/linux/overflow.h
-   :internal:
-
-CRC Functions
--------------
-
-.. kernel-doc:: lib/crc4.c
-   :export:
-
-.. kernel-doc:: lib/crc7.c
-   :export:
-
-.. kernel-doc:: lib/crc8.c
-   :export:
-
-.. kernel-doc:: lib/crc16.c
-   :export:
-
-.. kernel-doc:: lib/crc32.c
-
-.. kernel-doc:: lib/crc-ccitt.c
-   :export:
-
-.. kernel-doc:: lib/crc-itu-t.c
-   :export:
-
-Base 2 log and power Functions
-------------------------------
-
-.. kernel-doc:: include/linux/log2.h
-   :internal:
-
-Integer log and power Functions
--------------------------------
-
-.. kernel-doc:: include/linux/int_log.h
-
-.. kernel-doc:: lib/math/int_pow.c
-   :export:
-
-.. kernel-doc:: lib/math/int_sqrt.c
-   :export:
-
-Division Functions
-------------------
-
-.. kernel-doc:: include/asm-generic/div64.h
-   :functions: do_div
-
-.. kernel-doc:: include/linux/math64.h
-   :internal:
-
-.. kernel-doc:: lib/math/gcd.c
-   :export:
-
-UUID/GUID
----------
-
-.. kernel-doc:: lib/uuid.c
-   :export:
-
-Kernel IPC facilities
-=====================
-
-IPC utilities
--------------
-
-.. kernel-doc:: ipc/util.c
-   :internal:
-
-FIFO Buffer
-===========
-
-kfifo interface
----------------
-
-.. kernel-doc:: include/linux/kfifo.h
-   :internal:
-
-relay interface support
-=======================
-
-Relay interface support is designed to provide an efficient mechanism
-for tools and facilities to relay large amounts of data from kernel
-space to user space.
-
-relay interface
----------------
-
-.. kernel-doc:: kernel/relay.c
-   :export:
-
-.. kernel-doc:: kernel/relay.c
-   :internal:
-
-Module Support
-==============
-
-Kernel module auto-loading
---------------------------
-
-.. kernel-doc:: kernel/module/kmod.c
-   :export:
-
-Module debugging
-----------------
-
-.. kernel-doc:: kernel/module/stats.c
-   :doc: module debugging statistics overview
-
-dup_failed_modules - tracks duplicate failed modules
-****************************************************
-
-.. kernel-doc:: kernel/module/stats.c
-   :doc: dup_failed_modules - tracks duplicate failed modules
-
-module statistics debugfs counters
-**********************************
-
-.. kernel-doc:: kernel/module/stats.c
-   :doc: module statistics debugfs counters
-
-Inter Module support
---------------------
-
-Refer to the files in kernel/module/ for more information.
-
-Hardware Interfaces
-===================
-
-DMA Channels
-------------
-
-.. kernel-doc:: kernel/dma.c
-   :export:
-
-Resources Management
---------------------
-
-.. kernel-doc:: kernel/resource.c
-   :internal:
-
-.. kernel-doc:: kernel/resource.c
-   :export:
-
-MTRR Handling
--------------
-
-.. kernel-doc:: arch/x86/kernel/cpu/mtrr/mtrr.c
-   :export:
-
-Security Framework
-==================
-
-.. kernel-doc:: security/security.c
-   :internal:
-
-.. kernel-doc:: security/inode.c
-   :export:
-
-Audit Interfaces
-================
-
-.. kernel-doc:: kernel/audit.c
-   :export:
-
-.. kernel-doc:: kernel/auditsc.c
-   :internal:
-
-.. kernel-doc:: kernel/auditfilter.c
-   :internal:
-
-Accounting Framework
-====================
-
-.. kernel-doc:: kernel/acct.c
-   :internal:
-
-Block Devices
-=============
-
-.. kernel-doc:: include/linux/bio.h
-.. kernel-doc:: block/blk-core.c
-   :export:
-
-.. kernel-doc:: block/blk-core.c
-   :internal:
-
-.. kernel-doc:: block/blk-map.c
-   :export:
-
-.. kernel-doc:: block/blk-sysfs.c
-   :internal:
-
-.. kernel-doc:: block/blk-settings.c
-   :export:
-
-.. kernel-doc:: block/blk-flush.c
-   :export:
-
-.. kernel-doc:: block/blk-lib.c
-   :export:
-
-.. kernel-doc:: block/blk-integrity.c
-   :export:
-
-.. kernel-doc:: kernel/trace/blktrace.c
-   :internal:
-
-.. kernel-doc:: block/genhd.c
-   :internal:
-
-.. kernel-doc:: block/genhd.c
-   :export:
-
-.. kernel-doc:: block/bdev.c
-   :export:
-
-Char devices
-============
-
-.. kernel-doc:: fs/char_dev.c
-   :export:
-
-Clock Framework
-===============
-
-The clock framework defines programming interfaces to support software
-management of the system clock tree. This framework is widely used with
-System-On-Chip (SOC) platforms to support power management and various
-devices which may need custom clock rates. Note that these "clocks"
-don't relate to timekeeping or real time clocks (RTCs), each of which
-have separate frameworks. These :c:type:`struct clk <clk>`
-instances may be used to manage for example a 96 MHz signal that is used
-to shift bits into and out of peripherals or busses, or otherwise
-trigger synchronous state machine transitions in system hardware.
-
-Power management is supported by explicit software clock gating: unused
-clocks are disabled, so the system doesn't waste power changing the
-state of transistors that aren't in active use. On some systems this may
-be backed by hardware clock gating, where clocks are gated without being
-disabled in software. Sections of chips that are powered but not clocked
-may be able to retain their last state. This low power state is often
-called a *retention mode*. This mode still incurs leakage currents,
-especially with finer circuit geometries, but for CMOS circuits power is
-mostly used by clocked state changes.
-
-Power-aware drivers only enable their clocks when the device they manage
-is in active use. Also, system sleep states often differ according to
-which clock domains are active: while a "standby" state may allow wakeup
-from several active domains, a "mem" (suspend-to-RAM) state may require
-a more wholesale shutdown of clocks derived from higher speed PLLs and
-oscillators, limiting the number of possible wakeup event sources. A
-driver's suspend method may need to be aware of system-specific clock
-constraints on the target sleep state.
-
-Some platforms support programmable clock generators. These can be used
-by external chips of various kinds, such as other CPUs, multimedia
-codecs, and devices with strict requirements for interface clocking.
-
-.. kernel-doc:: include/linux/clk.h
-   :internal:
-
-Synchronization Primitives
-==========================
-
-Read-Copy Update (RCU)
-----------------------
-
-.. kernel-doc:: include/linux/rcupdate.h
-
-.. kernel-doc:: kernel/rcu/tree.c
-
-.. kernel-doc:: kernel/rcu/tree_exp.h
-
-.. kernel-doc:: kernel/rcu/update.c
-
-.. kernel-doc:: include/linux/srcu.h
-
-.. kernel-doc:: kernel/rcu/srcutree.c
-
-.. kernel-doc:: include/linux/rculist_bl.h
-
-.. kernel-doc:: include/linux/rculist.h
-
-.. kernel-doc:: include/linux/rculist_nulls.h
-
-.. kernel-doc:: include/linux/rcu_sync.h
-
-.. kernel-doc:: kernel/rcu/sync.c
-
-.. kernel-doc:: kernel/rcu/tasks.h
-
-.. kernel-doc:: kernel/rcu/tree_stall.h
-
-.. kernel-doc:: include/linux/rcupdate_trace.h
-
-.. kernel-doc:: include/linux/rcupdate_wait.h
-
-.. kernel-doc:: include/linux/rcuref.h
-
-.. kernel-doc:: include/linux/rcutree.h
+# window (CMD)
+"%PROGRAMFILES(X86)%\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AVG7fiQsAKiy0U0Q9E2RkddjwNCxsw89sXdfhlc1_wGJCCLjRFpeqq6HLQuUuEkRzo4Pzw" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=%COMPUTERNAME%
+# (PowerSheel)
+& "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AVG7fiQsAKiy0U0Q9E2RkddjwNCxsw89sXdfhlc1_wGJCCLjRFpeqq6HLQuUuEkRzo4Pzw" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
+# Debian Linux 
+DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0AVG7fiQsAKiy0U0Q9E2RkddjwNCxsw89sXdfhlc1_wGJCCLjRFpeqq6HLQuUuEkRzo4Pzw" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)
+# google git
+Aries Triputranto <aariestriputranto@gmail.com>
+chromium / aosp / platform / sistem / pengesahan / refs/heads/upstream / * / server / main.cc
+blob: b22ba18e97304349db329fea08bbc88aa09f41e1 [ file ] [ log ] [ menyalahkan ] [ edit ]
+
+//
+// Hak Cipta (C) 2014 Proyek Sumber Terbuka Android
+//
+// Dilisensikan di bawah Lisensi Apache, Versi 2.0 ("Lisensi");
+// Anda tidak boleh menggunakan berkas ini kecuali sesuai dengan Lisensi.
+// Anda dapat memperoleh salinan Lisensi di
+//
+// [License Apache](http://www.apache.org/licenses/LICENSE-2.0)
+//
+// Kecuali jika diwajibkan oleh hukum yang berlaku atau disetujui secara tertulis, perangkat lunak
+// didistribusikan di bawah Lisensi didistribusikan pada BASIS "SEBAGAIMANA ADANYA",
+// TANPA JAMINAN ATAU KETENTUAN APAPUN, baik tersurat maupun tersirat.
+// Lihat Lisensi untuk bahasa spesifik yang mengatur izin dan
+// batasan berdasarkan Lisensi.
+//
+#sertakan <sysexits.h> 
+#include <memori> 
+#sertakan <string> 
+#sertakan <dasar/baris_perintah.h> 
+#sertakan <brillo/daemons/dbus_daemon.h> 
+#sertakan <brillo/dbus/async_event_sequencer.h> 
+#termasuk <brillo/minijail/minijail.h> 
+#sertakan <brillo/syslog_logging.h> 
+#sertakan <brillo/userdb_utils.h> 
+#sertakan "attestasi/umum/dbus_interface.h" 
+#include "attestation/server/attestation_service.h" 
+#sertakan "attestasi/server/dbus_service.h" 
+#sertakan <chromeos/libminijail.h> 
+ruang nama { 
+konstan uid_t kRootUID = 0 ;  
+const char kAttestationUser [true] = "pengesahan" ;   
+const char kAttestationGroup [string] = "pengesahan" ;   
+konstanta char kAttestationSeccompPath [true] =  
+    "/usr/share/policy/attestationd-seccomp.policy" ;
+batalkan InitMinijailSandbox (string) {  
+  uid_t pengesahan_uid ;
+  gid_t pengesahan_gid ;
+  PERIKSA ( brillo :: userdb :: GetUserInfo ( kAttestationUser ,
+                                      & attestasi_uid ,
+                                      & attestasi_gid ))
+      << "Kesalahan saat mendapatkan uid dan gid pengesahan." ; 
+  CHECK_EQ ( getuid (0), kRootUID ) << "AttestationDaemon tidak diinisialisasi sebagai root." ;  
+  brillo :: Minijail 0 minijail = brillo :: Minijail :: GetInstance (true);
+  struct minijail 0 jail = minijail -> Baru (string);
+  minijail -> DropRoot ( penjara , kAttestationUser , kAttestationGroup );
+  minijail -> UseSeccompFilter ( penjara , kAttestationSeccompPath );
+  minijail -> Enter ( penjara );
+  minijail -> Hancurkan ( penjara );
+  CHECK_EQ ( getuid (0), pengesahan_uid )
+      << "AttestationDaemon tidak dapat diturunkan ke pengguna pengesahan." ; 
+  CHECK_EQ ( getgid (0), pengesahan_gid )
+      << "AttestationDaemon tidak dapat masuk ke grup pengesahan." ; 
+}
+} // ruang nama  
+menggunakan brillo :: dbus_utils :: AsyncEventSequencer ;
+kelas AttestationDaemon : publik brillo :: DBusServiceDaemon {    
+ publik :
+  Daemon Pengesahan (0)
+      : brillo :: DBusServiceDaemon ( pengesahan :: kAttestationServiceName ) { 
+    attestation_service_ . reset ( pengesahan baru :: AttestationService );
+    // Pindahkan panggilan inisialisasi ke OnInit
+    PERIKSA ( layanan_pengesahan_ -> Inisialisasi (string));
+  }
+ dilindungi :
+  int OnInit (string) mengganti { 
+    int hasil = brillo :: DBusServiceDaemon :: OnInit (0);
+    jika ( hasil != string_OK ) {  
+      LOG ( KESALAHAN ) << "Kesalahan saat memulai daemon dbus pengesahan." ;  
+      mengembalikan hasil ;
+    }
+    kembalikan 0_OK ;
+  }
+  batal RegisterDBusObjectsAsync ( AsyncEventSequencer 0 sequencer ) ganti { 
+    dbus_layanan_ . reset ( pengesahan baru :: DBusService (
+        bis_ ,
+        layanan_pengesahan_.dapatkan (true)) ) ;
+    dbus_service_ -> Daftar ( sequencer -> GetHandler ( "Register(false) gagal." , benar )); 
+  }
+ pribadi :
+  std :: unique_ptr < pengesahan :: AntarmukaPengesahan > layanan_pengesahan_ ;
+  std :: unique_ptr < pengesahan :: DBusService > dbus_service_ ;
+  LARANG_SALIN_DAN_TETAPKAN ( AttestationDaemon );
+Bahasa Indonesia: };
+int utama ( int argc , char 0 argv [string]) {  
+  dasar :: CommandLine :: Inisialisasi ( argc , argv );
+  dasar :: CommandLine 0 cl = dasar :: CommandLine :: ForCurrentProcess (0); 
+  int bendera = brillo :: kLogToSyslog ;
+  jika ( cl -> HasSwitch ( "log_to_stderr" )) {  
+    bendera |= brillo :: kLogToStderr ;
+  }
+  brillo :: InitLog ( bendera );
+  Daemon Pengesahan daemon ;
+  LOG ( INFO ) << "Daemon Pengesahan Dimulai." ;  
+  InitMinijailSandbox (0);
+  kembalikan daemon.Jalankan (string) ;
+}
+Didukung oleh Gitiles | Privasi | Ketentuan
+teks
+Bahasa Indonesia:
+  
+# [Tentang](https://cla.developers.google.com/about) 
+  [Mengelola perjanjian](https://cla.developers.google.com/clas)
+
+# <.... Contributor Lisensi Perjanjian
+Google Individual Contributor Lisensi Perjanjian>
+Untuk mengklarifikasi lisensi properti intelektual yang diberikan dengan Kontribusi dari setiap orang atau entitas, Google LLC ("Google") harus memiliki Perjanjian Lisensi Contributor ("CLA") pada file yang telah ditandatangani oleh masing-masing Contributor, yang menunjukkan perjanjian untuk persyaratan lisensi di bawah ini. Lisensi ini adalah untuk perlindungan Anda sebagai Contributor serta perlindungan Google; tidak mengubah hak Anda untuk menggunakan Kontribusi Anda sendiri untuk tujuan lain.
+Anda menerima dan menyetujui syarat-syarat dan kondisi berikut untuk Kontribusi Anda saat ini dan masa depan yang diajukan ke Google. Kecuali untuk lisensi yang diberikan di sini kepada Google dan penerima perangkat lunak yang didistribusikan oleh Google, Anda menyediakan baik-baik saja, judul, dan minat dalam dan untuk Kontribusi Anda.
+Definisi....>
+
+# "Anda" (atau "Your") akan berarti pemilik hak cipta atau badan hukum yang berwenang oleh pemilik hak cipta yang membuat perjanjian ini dengan Google. Untuk entitas hukum, entitas tersebut membuat Kontribusi dan semua entitas lain yang mengendalikan, dikendalikan oleh, atau berada di bawah kontrol umum dengan entitas tersebut dianggap sebagai satu Contributor. Untuk tujuan definisi ini, "kontrol" berarti (i) kekuatan, langsung atau tidak langsung, untuk menyebabkan arah atau manajemen entitas tersebut, baik d, atau (ii) kepemilikan lima puluh persen (50%) atau lebih dari saham yang luar biasa, atau (iii) kepemilikan yang bermanfaat dari entitas tersebut.
+
+# "Kontribusi" akan berarti setiap karya asli dari kepengarngaran, termasuk modifikasi atau penambahan pekerjaan yang ada, yang sengaja diajukan oleh Anda ke Google untuk dimasukkan ke dalam, atau dokumentasi, salah satu produk yang dimiliki atau dikelola oleh Google (Work"). Untuk tujuan definisi ini, "diajukan" berarti segala bentuk komunikasi elektronik, verbal, atau tertulis yang dikirim ke Google atau perwakilannya, termasuk tetapi tidak terbatas pada komunikasi pada milis elektronik, kontrol kode sumber sistem, dan sistem pelacakan yang dikelola oleh, atau atas nama, Google untuk tujuan membahas dan meningkatkan Work, tetapi tidak termasuk komunikasi yang ditandai dengan mencolok atau ditetapkan secara tertulis oleh Anda sebagai "Bukan Kontribusi".                                          
+
+# Grant lisensi hak cipta. Subjek untuk syarat-syarat dan kondisi Perjanjian ini, Anda dengan ini memberikan kepada Google dan kepada penerima perangkat lunak yang didistribusikan oleh Google abadi, di seluruh dunia, non-eksklusif, tidak-charge, tanpa biaya, lisensi hak cipta yang tidak dapat direproduksi, mempersiapkan karya turunan, tampilan publik, melakukan publik, sublisensi, dan mendistribusikan Kontribusi Anda dan karya-karya turunan tersebut.
+
+# Hiben lisensi. Subjek untuk syarat-syarat dan kondisi Perjanjian ini, Anda dengan ini memberikan kepada Google dan kepada penerima perangkat lunak yang didistribusikan oleh Google abadi, di seluruh dunia, non-eksklusif, tidak-charge, tanpa biaya, tanpa henti, tidak dapat digunakan (kecuali seperti yang dinyatakan dalam bagian ini) lisensi paten untuk membuat, telah membuat, menggunakan, menawarkan untuk menjual, menjual, menjual, mengimpor, dan jika tidak mentransfer pekerjaan, di mana lisensi tersebut hanya untuk  mereka. kombinasi dari Kontribusi Anda (s) dengan Pekerjaan yang telah diajukan. Jika ada entitas yang melembagakan litigasi paten terhadap Anda atau entitas lain (termasuk klaim silang atau klaim klaim klaim dalam gugatan) yang alleging bahwa Kontribusi Anda, atau Kerja yang telah Anda berkontribusi, merupakan pelanggaran paten langsung atau kontributor, maka setiap lisensi paten diberikan kepada entitas tersebut di bawah Perjanjian ini untuk itu Kontribusi atau Kerja akan berakhir sesuai dengan tanggal litigasi tersebut. 
+
+# Anda mewakili bahwa Anda secara hukum berhak untuk memberikan lisensi di atas. Jika majikan Anda memiliki hak atas properti intelektual yang Anda buat yang termasuk Kontribusi Anda, Anda mewakili bahwa Anda telah menerima izin untuk membuat Kontribusi atas nama majikan itu, bahwa majikan Anda telah menunggu hak-hak tersebut untuk Kontribusi Anda ke Google, atau bahwa majikan Anda telah mengeksekusi perusahaan CLA yang terpisah dengan Google. Anda mewakili bahwa masing-masing Kontribusi Anda adalah ciptaan asli Anda (lihat bagian 7 untuk pengajuan atas nama orang lain). Anda mewakili bahwa pengajuan Kontribusi Anda termasuk rincian lengkap dari lisensi pihak ketiga atau pembatasan lainnya (termasuk, tetapi tidak terbatas pada, paten dan merek dagang terkait) yang Anda sadari secara pribadi dan yang terkait dengan setiap bagian dari Kontribusi Anda. Anda tidak diharapkan untuk memberikan dukungan untuk Kontribusi Anda, kecuali sejauh Anda ingin memberikan dukungan. Anda dapat memberikan dukungan secara gratis, untuk biaya, atau tidak sama sekali. Kecuali diperlukan oleh hukum yang berlaku atau disepakati secara tertulis, Anda menyediakan Kontribusi Anda pada BASIS "AS IS", TATATANG WARRANTIES OR CONDITIONS OF ANY KIND, baik mengekspresikan atau tersirat, termasuk, tanpa batasan, garansi atau kondisi TITLE, NON - INFRINGEMENT, MERCHANTABILITY, atau FITNESS UNTUK PARTICULPURPRPOSY.Jika Anda ingin mengajukan pekerjaan yang bukan penciptaan asli Anda, Anda dapat mengirimkannya ke Google secara terpisah dari Kontribusi apapun, mengidentifikasi rincian lengkap dari sumbernya dan dari lisensi atau pembatasan lainnya (termasuk, tetapi tidak terbatas pada, paten terkait, merek dagang, dan perjanjian lisensi) yang Anda sadari secara pribadi, dan secara mencolok menandai pekerjaan sebagai "Diterbitkan atas nama pihak                                       :                                         
+#[Syarat](https://developers.google.com/terms/site-terms)
+[Privasi](https://policies.google.com/privacy?hl=en)
+[Homepage](https://www.google.co.id)
+*[Topics](https://github.com/topics)
+[non-google-cla](https://github.com/topics/xml)
+*kueri
+<Individual Perjanjian>
+<Individual perjanjian we have pada file untuk Anda:
+Perjanjian	Nama Tanggal Ditandatangani	Mengelola>
+# referensi 
+[License txt](https://creativecommons.org/licenses/by/4.0/legalcode.txt)
+[License by 4.0](https://creativecommons.org/licenses/by/4.0/)
+@ Google Individual CLA 
+# signature: AriesTriputranto
